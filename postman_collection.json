@@ -1,0 +1,161 @@
+{
+  "info": {
+    "name": "Progetto Settimana 15 - Social Network",
+    "description": "Collection per testare gli endpoint di autenticazione e utenti",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"gabriele\",\n  \"nomeCompleto\": \"Gabriele Leonardi\",\n  \"email\": \"gabriele@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5174/api/utenti",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "utenti"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"gabriele@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5174/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Validation Examples",
+      "item": [
+        {
+          "name": "Register - Password troppo corta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"test\",\n  \"nomeCompleto\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"short\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5174/api/utenti",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "utenti"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Register - Email invalida",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"test\",\n  \"nomeCompleto\": \"Test User\",\n  \"email\": \"invalid-email\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5174/api/utenti",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "utenti"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login - Email non trovata",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"nonexistent@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5174/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
