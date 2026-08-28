@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Progetto Settimana 15 - Social Network",
-    "description": "Collection per testare gli endpoint di autenticazione e utenti",
+    "description": "Collection per testare gli endpoint. Fai 'Login' una volta: il token viene salvato automaticamente nella variabile {{token}} e usato da tutte le richieste autenticate.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -33,6 +33,9 @@
                 "api",
                 "utenti"
               ]
+            },
+            "auth": {
+              "type": "noauth"
             }
           }
         },
@@ -62,20 +65,33 @@
                 "auth",
                 "login"
               ]
+            },
+            "auth": {
+              "type": "noauth"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Salva automaticamente il token nella variabile di collection {{token}}:",
+                  "// dopo un login riuscito tutte le richieste autenticate funzionano senza copia-incolla",
+                  "const json = pm.response.json();",
+                  "if (pm.response.code === 200 && json.accessToken) {",
+                  "    pm.collectionVariables.set('token', json.accessToken);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Get Me (profilo utente loggato)",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE",
-                "description": "Incolla il token ricevuto dal login"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "http://localhost:5174/api/utenti/me",
               "protocol": "http",
@@ -95,13 +111,7 @@
           "name": "Promuovi utente (SOLO MODERATOR)",
           "request": {
             "method": "PATCH",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE",
-                "description": "Token del moderatore. Sostituisci USER_ID con l'id dell'utente da promuovere"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "http://localhost:5174/api/utenti/USER_ID/promuovi",
               "protocol": "http",
@@ -131,10 +141,6 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE"
               }
             ],
             "body": {
@@ -159,12 +165,7 @@
           "name": "Get All Posts (autenticato)",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "http://localhost:5174/api/posts",
               "protocol": "http",
@@ -183,12 +184,7 @@
           "name": "Get Post by ID (autenticato)",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "http://localhost:5174/api/posts/POST_ID",
               "protocol": "http",
@@ -208,12 +204,7 @@
           "name": "Get Posts by Autore (autenticato)",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "http://localhost:5174/api/posts/autore/AUTORE_ID",
               "protocol": "http",
@@ -238,10 +229,6 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE"
               }
             ],
             "body": {
@@ -267,12 +254,7 @@
           "name": "Add Like (autenticato)",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "http://localhost:5174/api/posts/POST_ID/like",
               "protocol": "http",
@@ -293,12 +275,7 @@
           "name": "Remove Like (autenticato)",
           "request": {
             "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer YOUR_JWT_TOKEN_HERE"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "http://localhost:5174/api/posts/POST_ID/like",
               "protocol": "http",
@@ -345,6 +322,9 @@
                 "api",
                 "utenti"
               ]
+            },
+            "auth": {
+              "type": "noauth"
             }
           }
         },
@@ -373,6 +353,9 @@
                 "api",
                 "utenti"
               ]
+            },
+            "auth": {
+              "type": "noauth"
             }
           }
         },
@@ -402,10 +385,30 @@
                 "auth",
                 "login"
               ]
+            },
+            "auth": {
+              "type": "noauth"
             }
           }
         }
       ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
     }
   ]
 }
