@@ -50,7 +50,8 @@ public class JwtFilter extends OncePerRequestFilter {
             Utente utente = utenteRepository.findById(utenteId)
                     .orElseThrow(()-> new UnauthorizedException("L'utente assiociato al token non esiste"));
 
-            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("Role_ " + utente.getRuolo().name()));
+            // il prefisso "ROLE_" è obbligatorio: hasRole('MODERATOR') cerca l'authority "ROLE_MODERATOR"
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + utente.getRuolo().name()));
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(utente, null, authorities));
 

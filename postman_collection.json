@@ -6,10 +6,10 @@
   },
   "item": [
     {
-      "name": "Auth",
+      "name": "Auth & Utenti",
       "item": [
         {
-          "name": "Register",
+          "name": "Register (primo utente diventa MODERATOR)",
           "request": {
             "method": "POST",
             "header": [
@@ -61,6 +61,256 @@
                 "api",
                 "auth",
                 "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Me (profilo utente loggato)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE",
+                "description": "Incolla il token ricevuto dal login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5174/api/utenti/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "utenti",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Promuovi utente (SOLO MODERATOR)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE",
+                "description": "Token del moderatore. Sostituisci USER_ID con l'id dell'utente da promuovere"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5174/api/utenti/USER_ID/promuovi",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "utenti",
+                "USER_ID",
+                "promuovi"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Create Post (autenticato)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testo\": \"Questo è il mio primo post!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5174/api/posts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "posts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Posts (autenticato)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5174/api/posts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "posts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Post by ID (autenticato)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5174/api/posts/POST_ID",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "posts",
+                "POST_ID"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Posts by Autore (autenticato)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5174/api/posts/autore/AUTORE_ID",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "posts",
+                "autore",
+                "AUTORE_ID"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Post (autore o MODERATOR)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testo\": \"Ho modificato il mio post\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5174/api/posts/POST_ID",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "posts",
+                "POST_ID"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Like (autenticato)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5174/api/posts/POST_ID/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "posts",
+                "POST_ID",
+                "like"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Remove Like (autenticato)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5174/api/posts/POST_ID/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5174",
+              "path": [
+                "api",
+                "posts",
+                "POST_ID",
+                "like"
               ]
             }
           }

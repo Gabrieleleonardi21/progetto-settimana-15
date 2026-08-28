@@ -5,9 +5,12 @@ import com.example.progettosettimana15.payload.UtentePayload;
 import com.example.progettosettimana15.payload.UtenteResponse;
 import com.example.progettosettimana15.services.UtenteService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @RestController
@@ -31,7 +34,10 @@ public class UtenteController {
         return UtenteResponse.from(utenteCorrente);
     }
 
-
-
-
+    // Solo un moderatore può promuovere un MEMBER a MODERATOR
+    @PatchMapping("/{id}/promuovi")
+    @PreAuthorize("hasRole('MODERATOR')")
+    public UtenteResponse promuovi(@PathVariable UUID id) {
+        return UtenteResponse.from(utenteService.promuoviAModeratore(id));
+    }
 }
